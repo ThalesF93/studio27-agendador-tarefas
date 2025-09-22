@@ -1,0 +1,14 @@
+server:
+  port: 8081
+spring:
+  application:
+    name: agendador-tarefas
+  datasource:
+    url: jdbc:postgres://localhost:5432/studio27-agendador
+    username: postgres
+    password: supino2604
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: none
