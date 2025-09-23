@@ -1,0 +1,53 @@
+	create table employees(
+	id uuid not null primary key,
+	name varchar(100) not null,
+	email varchar(100) not null unique,
+	login varchar(50) unique,
+	password varchar(300) not null,
+	cpf varchar(14) not null unique,
+	address varchar(300),
+	registration_date timestamp,
+	roles varchar[]
+	);
+
+	create table costumers (
+	name varchar(100) not null,
+	email varchar(100) unique,
+	phone varchar(20) not null unique,
+	cpf varchar(15) unique,
+	address varchar(100),
+	id_employee uuid not null references employees(id),
+	);
+
+	create table services (
+	type varchar(100) not null,
+	date timestamp not null,
+	price numeric(18,2)
+
+	);
+
+
+	create table client(
+    id uuid not null primary key,
+    client_id varchar(150) not null,
+    client_secret varchar(400) not null,
+    redirect_uri varchar(200) not null,
+    scope varchar(50)
+    );
+
+    //cria estensao para o banco gerar UUID
+    CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+
+    CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+
+
+    insert into usuario
+    (id, login, senha, email, roles)
+    values
+    (uuid_generate_v4(), 'gerente', '$2a$12$Ls2AbEVS7sMBT/PRz.bg9.PtiTS0vAu./fwt8o34birjQN5YPg.Lm' , 'gerente@gmail.com', '{GERENTE}' )
+
+    insert into client
+    (id, client_id, client_secret, redirect_uri, scope)
+
+    values
+    (uuid_generate_v4(), 'client-production', '$2a$12$iWAHdb62F1ywgU0sgmYsXeAaJExBphe0isHlJ.SM8VgzkroJ9aqiC', 'http://localhost:8080/authorized', 'GERENTE'

@@ -1,4 +1,18 @@
 services:
+  app:
+    build: .
+    container_name: agendador-app
+    environment:
+      - SPRING_PROFILES_ACTIVE=default
+      - SERVER_PORT=8081
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/studio27-agendador
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=supino2604
+    ports:
+      - "8081:8081"  # host:container
+    depends_on:
+      - postgres
+
   postgres:
     image: 'postgres:latest'
     environment:

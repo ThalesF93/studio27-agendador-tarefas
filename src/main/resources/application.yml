@@ -1,10 +1,10 @@
 server:
-  port: 8081
+  port: ${SERVER_PORT:8081}
 spring:
   application:
     name: agendador-tarefas
   datasource:
-    url: jdbc:postgres://localhost:5432/studio27-agendador
+    url: jdbc:postgresql://localhost:5432/studio27-agendador
     username: postgres
     password: supino2604
     driver-class-name: org.postgresql.Driver
