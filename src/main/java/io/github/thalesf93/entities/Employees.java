@@ -19,7 +19,8 @@ import java.util.UUID;
 public class Employees {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
+    @org.hibernate.annotations.UuidGenerator
     private UUID id;
 
     @Column(name = "name", nullable = false)

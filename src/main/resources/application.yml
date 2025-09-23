@@ -4,11 +4,11 @@ spring:
   application:
     name: agendador-tarefas
   datasource:
-    url: jdbc:postgresql://localhost:5432/studio27-agendador
-    username: postgres
-    password: supino2604
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/studio27-agendador}
+    username: ${SPRING_DATASOURCE_USERNAME:postgres}
+    password: ${SPRING_DATASOURCE_PASSWORD:supino2604}
     driver-class-name: org.postgresql.Driver
   jpa:
     show-sql: true
     hibernate:
-      ddl-auto: none
+      ddl-auto: update
