@@ -8,6 +8,7 @@ import lombok.Data;
 import org.hibernate.annotations.Type;
 import org.hibernate.validator.constraints.br.CPF;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
@@ -15,12 +16,11 @@ import java.util.UUID;
 @Entity
 @Table(name = "employees")
 @Data
-@EntityListeners(AudititingEntityListener.class)
+@EntityListeners(AuditingEntityListener.class)
 public class Employees {
 
     @Id
-    @GeneratedValue
-    @org.hibernate.annotations.UuidGenerator
+    @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
     @Column(name = "name", nullable = false)
@@ -46,10 +46,15 @@ public class Employees {
 
     @Column
     @CreatedDate
-    @JsonFormat(pattern = "dd/mm/YYYY")
+    @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate registrationDate;
 
     @Type(ListArrayType.class)//traduz list para array
     @Column(name = "roles", columnDefinition = "varchar[]")
     private List<String> roles;
+
+    //Setando o E-mail inserido como login do empregado
+    public void setLogin(String login) {
+        this.login = this.email;
+    }
 }
