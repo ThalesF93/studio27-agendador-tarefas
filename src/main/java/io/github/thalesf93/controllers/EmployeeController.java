@@ -10,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.swing.text.LayoutQueue;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -40,21 +41,33 @@ public class EmployeeController {
         boolean hasId = id != null;
         boolean hasName = name != null && !name.isBlank();
 
-        if (hasId == hasName){
-            return ResponseEntity.badRequest().body("Enter only the ID or Name of the employee you wish to delete");
+
+        if (!hasId && !hasName ){
+            return ResponseEntity.badRequest().body("Enter the ID or Name of the employee you wish to delete");
         }
 
-        if (hasName) {
-            var subjectName = repository.findByName(name).orElse(null);
-            service.delete(subjectName);
+        if (hasId){
+            Optional<Employees> subjectId = repository.findById(id);
+            service.delete(subjectId.orElse(null));
         }
 
         else {
-            Optional<Employees> subjectId = repository.findById(id);
-            service.delete(subjectId.orElse(null));
-            log.info("Usuário deletado com sucesso");
+            List<Employees> searchByName = repository.findAll().stream().filter(emp -> emp.getName().equalsIgnoreCase(name)).toList();
+            if (searchByName.isEmpty()){
+                return ResponseEntity.badRequest().body("Employee not found");
+            }
+
+            if (searchByName.size() > 1){
+                return ResponseEntity.badRequest().body("Found more than 1 employee, please enter the ID too");
+            }
+            service.delete(searchByName.get(0));
         }
-        return ResponseEntity.ok("Usuário deletado com sucesso! ");
+
+        log.info("Deleted successfully");
+        return ResponseEntity.ok("Deleted successfully! ");
     }
+
+
+
 
 }
