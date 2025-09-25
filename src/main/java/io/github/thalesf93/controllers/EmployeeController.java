@@ -3,7 +3,6 @@ package io.github.thalesf93.controllers;
 import io.github.thalesf93.dto.EmployeesDTO;
 import io.github.thalesf93.entities.Employee;
 import io.github.thalesf93.mappers.EmployeesMapper;
-import io.github.thalesf93.repository.EmployeesRepository;
 import io.github.thalesf93.services.EmployeeService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,7 +19,7 @@ import java.util.UUID;
 @Slf4j
 public class EmployeeController {
 
-    private final EmployeesRepository repository;
+
     private final EmployeeService service;
     private final EmployeesMapper mapper;
 
@@ -46,12 +45,12 @@ public class EmployeeController {
         }
 
         if (hasId){
-            Optional<Employee> subjectId = repository.findById(id);
+            Optional<Employee> subjectId = service.findById(id);
             service.delete(subjectId.orElse(null));
         }
 
         else {
-            List<Employee> searchByName = repository.findAll().stream().filter(emp -> emp.getName().equalsIgnoreCase(name)).toList();
+            List<Employee> searchByName = service.findByName(name);
             if (searchByName.isEmpty()){
                 return ResponseEntity.badRequest().body("Employee not found");
             }
@@ -75,15 +74,17 @@ public class EmployeeController {
 
         // apenas forma de converter a lista
         // List<EmployeesDTO> listConverter = list.stream().map(mapper::toDTO).toList();
-
+        log.info("Search Successfully{}", list);
         return ResponseEntity.ok(list);
     }
 
     @GetMapping("/search/id")
     public ResponseEntity<EmployeesDTO> getEmployeeById(@RequestParam(value = "id") UUID id){
         return service.getEmployeeById(id).map(employee -> {EmployeesDTO dto = mapper.toDTO(employee);
+            log.info("Search result:{}", dto);
             return ResponseEntity.ok(dto);
         }).orElseGet(() -> ResponseEntity.notFound().build());
+
 
     }
     @PutMapping("/update/{id}")
@@ -97,7 +98,8 @@ public class EmployeeController {
         Employee emp = employee.get();
         mapper.updateFromDTO(dto, emp);
 
-        repository.save(emp);
+        service.saveEmployee(emp);
+        log.info("Update successfully: {}", emp);
         return ResponseEntity.ok().build();
 
     }

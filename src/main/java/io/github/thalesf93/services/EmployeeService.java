@@ -6,7 +6,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -22,14 +21,17 @@ public class EmployeeService {
         return repository.save(employee);
     }
 
+    public Optional<Employee> findById(UUID id){
+        return repository.findById(id);
+    }
+
     public void delete(Employee employee){
         repository.delete(employee);
     }
 
-    @Transactional
-    public void deleteByName(String name){
-        repository.deleteByName(name);
-    }
+  public List<Employee> findByName(String name){
+      return repository.findAll().stream().filter(emp -> emp.getName().equalsIgnoreCase(name)).toList();
+  }
 
     public Optional<Employee> getEmployeeById(UUID id){
         return repository.findById(id);
