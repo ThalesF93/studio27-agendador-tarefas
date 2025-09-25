@@ -1,9 +1,7 @@
 package io.github.thalesf93.mappers;
 
 import io.github.thalesf93.dto.CostumersDTO;
-import io.github.thalesf93.dto.EmployeesDTO;
-import io.github.thalesf93.entities.Costumers;
-import io.github.thalesf93.entities.Employee;
+import io.github.thalesf93.entities.Costumer;
 import io.github.thalesf93.repository.EmployeesRepository;
 import lombok.Getter;
 import org.mapstruct.*;
@@ -20,12 +18,13 @@ public abstract class CostumersMapper {
 
     // Metodo que retorna a entidade
     //sempre passar como paramatro o objeto que será convertido
-    @Mapping(target = "employee", expression = "java( employeesRepository.findById(dto.idEmployee()).orElse(null))")
-    public abstract Costumers toEntity(CostumersDTO dto);
+    @Mapping(target = "employee",
+            expression = "java(dto.idEmployee() == null ? null : employeesRepository.findById(dto.idEmployee()).orElse(null))")
+    public abstract Costumer toEntity(CostumersDTO dto);
 
 
-    public abstract CostumersDTO toDTO(Costumers costumers);
+    public abstract CostumersDTO toDTO(Costumer costumer);
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    public abstract void updateFromDTO(CostumersDTO dto, @MappingTarget Costumers entity);
+    public abstract void updateFromDTO(CostumersDTO dto, @MappingTarget Costumer entity);
 }

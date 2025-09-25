@@ -9,7 +9,7 @@ import java.util.UUID;
 @Entity
 @Table(name = "costumers")
 @Data
-public class Costumers {
+public class Costumer {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -22,7 +22,7 @@ public class Costumers {
     @Email
     private String email;
 
-    @Column(name = "phone", nullable = false)
+    @Column(name = "phone", nullable = false, unique = true)
     private String phone;
 
     @Column(name = "cpf", unique = true)

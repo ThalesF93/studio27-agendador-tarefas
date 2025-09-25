@@ -10,7 +10,7 @@
 	roles varchar[]
 	);
 
-	create table costumers (
+	create table costumer (
 	name varchar(100) not null,
 	email varchar(100) unique,
 	phone varchar(20) not null unique,
