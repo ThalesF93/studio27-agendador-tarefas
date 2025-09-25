@@ -34,5 +34,5 @@ public class Costumers {
 
     @ManyToOne
     @JoinColumn(name = "id_employee")
-    private Employees employee;
+    private Employee employee;
 }

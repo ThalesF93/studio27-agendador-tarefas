@@ -1,4 +1,4 @@
-	create table employees(
+	create table employee(
 	id uuid not null primary key,
 	name varchar(100) not null,
 	email varchar(100) not null unique,
@@ -16,7 +16,7 @@
 	phone varchar(20) not null unique,
 	cpf varchar(15) unique,
 	address varchar(100),
-	id_employee uuid not null references employees(id),
+	id_employee uuid not null references employee(id),
 	);
 
 	create table services (

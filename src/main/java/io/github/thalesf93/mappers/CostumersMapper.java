@@ -1,11 +1,12 @@
 package io.github.thalesf93.mappers;
 
 import io.github.thalesf93.dto.CostumersDTO;
+import io.github.thalesf93.dto.EmployeesDTO;
 import io.github.thalesf93.entities.Costumers;
+import io.github.thalesf93.entities.Employee;
 import io.github.thalesf93.repository.EmployeesRepository;
 import lombok.Getter;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
+import org.mapstruct.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
 //transforma em um component para spring
@@ -24,4 +25,7 @@ public abstract class CostumersMapper {
 
 
     public abstract CostumersDTO toDTO(Costumers costumers);
+
+    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    public abstract void updateFromDTO(CostumersDTO dto, @MappingTarget Costumers entity);
 }
