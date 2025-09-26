@@ -74,7 +74,7 @@ public class EmployeeController {
 
         // apenas forma de converter a lista
         // List<EmployeesDTO> listConverter = list.stream().map(mapper::toDTO).toList();
-        log.info("Search Successfully{}", list);
+        log.info("Search Result{}", list);
         return ResponseEntity.ok().body(list);
     }
 

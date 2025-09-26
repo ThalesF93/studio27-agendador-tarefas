@@ -26,5 +26,5 @@ public abstract class CostumersMapper {
     public abstract CostumersDTO toDTO(Costumer costumer);
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    public abstract void updateFromDTO(CostumersDTO dto, @MappingTarget Costumer entity);
+    public abstract Costumer updateFromDTO(CostumersDTO dto, @MappingTarget Costumer entity);
 }
